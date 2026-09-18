@@ -1,46 +1,36 @@
 # ST1047162-PROG5121POE-PART-1
-# Chat App — Part 1: Registration and Login Feature
+# Chat App — Part 1: Registration and Login
 
-A console-based Java application that implements user registration and login functionality according to the requirements in the task brief.
+This is a console-based Java application that allows a user to register an account and then log in using the details they registered with. The program follows the requirements given in the task brief.
 
-The application uses the Java console for user input and does not use a graphical user interface (GUI) or `JOptionPane`.
+The application runs through the console and does not use a GUI or `JOptionPane`.
 
 ## Project Files
 
-| File                  | Purpose                                                                                       |
-| --------------------- | --------------------------------------------------------------------------------------------- |
-| `src/Login.java`      | Contains the `Login` class, including user details, validation, registration and login logic. |
-| `src/Main.java`       | The main console driver that handles registration and login interaction with the user.        |
-| `test/LoginTest.java` | Contains JUnit 4 unit tests for testing the validation and login functionality.               |
+| File                  | What it does                                                                           |
+| --------------------- | -------------------------------------------------------------------------------------- |
+| `src/Login.java`      | Contains the login class and handles the validation, registration and login functions. |
+| `src/Main.java`       | Runs the program and allows the user to enter their registration and login details.    |
+| `test/LoginTest.java` | Contains the JUnit 4 tests used to test the different functions in the Login class.    |
 
 ## Login Class Methods
 
-The `Login` class contains the following main methods:
+The main methods in the `Login` class are:
 
-| Method                                  | Functionality                                                                                                                 |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| `boolean checkUserName()`               | Checks that the username contains an underscore (`_`) and is no more than 5 characters long.                                  |
-| `boolean checkPasswordComplexity()`     | Checks that the password is at least 8 characters long and contains a capital letter, a number and a special character.       |
-| `boolean checkCellPhoneNumber()`        | Checks that the cellphone number starts with an international country code, such as `+27`, followed by the subscriber number. |
-| `String registerUser()`                 | Validates the username, password and cellphone number and returns the appropriate registration message.                       |
-| `boolean loginUser(username, password)` | Compares the entered username and password with the details captured during registration.                                     |
-| `String returnLoginStatus(boolean)`     | Returns a welcome message when login is successful or an error message when login fails.                                      |
+| Method                          | What it does                                                                                                |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `checkUserName()`               | Checks if the username contains an underscore and is 5 characters or less.                                  |
+| `checkPasswordComplexity()`     | Checks if the password has at least 8 characters, one capital letter, one number and one special character. |
+| `checkCellPhoneNumber()`        | Checks if the cellphone number has an international country code, such as `+27`.                            |
+| `registerUser()`                | Checks the username, password and cellphone number and gives the user the correct registration message.     |
+| `loginUser(username, password)` | Checks whether the username and password entered during login match the registered details.                 |
+| `returnLoginStatus(boolean)`    | Displays a message depending on whether the login was successful or not.                                    |
 
-### Overloaded Validation Methods
+There are also overloaded versions of the username, password and cellphone validation methods. These allow different values to be tested directly instead of only testing the information stored in the Login object.
 
-The application also includes overloaded versions of the validation methods:
+## How Registration Works
 
-* `checkUserName(String)`
-* `checkPasswordComplexity(String)`
-* `checkCellPhoneNumber(String)`
-
-These methods allow the validation rules to be tested using specific input values rather than only the information stored in a `Login` object.
-
-## Registration Process
-
-The registration process is handled by the `Main` and `Login` classes.
-
-The user is asked to enter:
+The user first enters their:
 
 1. First name
 2. Last name
@@ -48,146 +38,136 @@ The user is asked to enter:
 4. Password
 5. Cellphone number
 
-A `Login` object is then created using the captured information.
+The information is then used to create a `Login` object.
 
-The application checks the username, password and cellphone number in the following order:
+The program checks the information in this order:
 
 **Username → Password → Cellphone number**
 
-If all validation requirements are met, registration is completed. If a requirement is not met, the user is asked to try registering again.
+If all the details are correct, the registration is completed. If something is wrong, the user is asked to register again.
 
-## Login Process
+## How Login Works
 
-After successful registration, the user is asked to enter their username and password.
+Once registration is successful, the user is asked to enter their username and password.
 
-The `loginUser()` method compares the entered credentials with the username and password stored during registration.
+The `loginUser()` method checks the details entered against the username and password that were saved during registration.
 
-If the details match, the login is successful and the application displays a welcome message containing the user's first and last name.
+If both details are correct, the user is logged in and receives a welcome message using their first and last name.
 
-If the details do not match, an error message is displayed and the user is given the option to try again.
+If the details are incorrect, the program tells the user that the username or password is incorrect and gives them the option to try again.
 
 ## Cellphone Number Validation
 
-The cellphone number is validated using a regular expression.
+The cellphone number is checked using a regular expression:
 
-The regular expression used is:
-
-```text
+```text id="c4v9nm"
 ^\+\d{2,3}\d{1,10}$
 ```
 
-This checks that the cellphone number:
+The pattern checks that the number:
 
 * Starts with a `+`
-* Contains a 2 or 3 digit international country code
-* Is followed by between 1 and 10 digits for the subscriber number
-
-For example, the test value:
-
-```text
-+27838968976
-```
-
-is accepted because `+27` is the country code and `838968976` contains 9 subscriber digits.
-
-The value:
-
-```text
-08966553
-```
-
-is rejected because it does not contain the required international country code.
-
-The regular-expression approach was informed by GeeksforGeeks, *Java Regex* (2023), accessed 18 September 2026.
-
-## Password Validation
-
-The password must meet the following requirements:
-
-* At least 8 characters long
-* Contains at least one uppercase letter
-* Contains at least one number
-* Contains at least one special character
-
-Regular expressions are used to check for the uppercase letter, number and special character requirements.
-
-## Username Validation
-
-The username must:
-
-* Contain an underscore (`_`)
-* Be no more than 5 characters long
-
-If either requirement is not met, the username is rejected.
-
-## Compiling and Running the Application
-
-The application can be compiled from the command line using:
-
-```bash
-javac -d build src/Login.java src/Main.java
-```
-
-After compilation, the application can be started using:
-
-```bash
-java -cp build Main
-```
-
-The program will then run in the console and prompt the user to register and log in.
-
-## Running Unit Tests
-
-The project uses JUnit 4 for unit testing.
-
-In NetBeans, the tests can be run by:
-
-1. Opening the project.
-2. Locating `LoginTest.java`.
-3. Right-clicking `LoginTest.java`.
-4. Selecting **Test File**.
-
-The unit tests check the validation and login functionality using the required test data from the task brief.
-
-## Design Assumptions
-
-### 1. First and Last Name
-
-First name and last name are captured during registration because they are required for the successful login welcome message:
-
-```text
-Welcome <first name>, <last name>, it is great to see you again.
-```
-
-### 2. Registration Validation Order
-
-The `registerUser()` method validates the information in this order:
-
-**Username → Password → Cellphone number**
-
-If a validation fails, the method returns the relevant error message instead of continuing to the next validation.
-
-If all three requirements are met, the method confirms that the username, password and cellphone number were successfully captured.
-
-### 3. Cellphone Number Length
-
-The cellphone-number requirement is interpreted as allowing the subscriber number to contain no more than 10 digits after the international country code.
+* Has a 2 or 3 digit country code
+* Has between 1 and 10 digits after the country code
 
 For example:
 
-```text
+```text id="x7n2qa"
 +27838968976
 ```
 
-is interpreted as:
+is accepted because `+27` is the country code and the remaining part is the subscriber number.
 
-* `+27` — international country code
-* `838968976` — subscriber number
+A number such as:
 
-This interpretation allows the supplied valid test data to pass while rejecting numbers without an international country code.
+```text id="m1k6pz"
+08966553
+```
+
+is rejected because it does not start with an international country code.
+
+I used GeeksforGeeks' *Java Regex* article from 2023 as a reference when working with regular expressions.
+
+## Password Validation
+
+The password has to meet four requirements:
+
+* It must have at least 8 characters.
+* It must contain a capital letter.
+* It must contain a number.
+* It must contain a special character.
+
+The program uses regular expressions to check some of these requirements.
+
+## Username Validation
+
+The username must contain an underscore (`_`) and cannot be longer than 5 characters.
+
+If the username does not meet these requirements, the program will not allow the registration to continue.
+
+## Running the Application
+
+The project can be compiled using:
+
+```bash id="q6b1wd"
+javac -d build src/Login.java src/Main.java
+```
+
+Then the application can be run using:
+
+```bash id="v2k8hx"
+java -cp build Main
+```
+
+The program will then open in the console and ask the user to register and log in.
+
+## Running the Tests
+
+JUnit 4 is used to test the Login class.
+
+In NetBeans, I can run the tests by:
+
+1. Opening the project.
+2. Finding `LoginTest.java`.
+3. Right-clicking on the file.
+4. Selecting **Test File**.
+
+The tests check whether the different validation and login methods work correctly using the test information provided in the task brief.
+
+## Assumptions Made
+
+### First Name and Last Name
+
+I included the first name and last name during registration because they are needed for the welcome message after a successful login.
+
+### Registration Order
+
+The `registerUser()` method checks the information in the following order:
+
+**Username → Password → Cellphone number**
+
+If one of the checks fails, the method returns the relevant message instead of continuing with the remaining checks.
+
+If everything is correct, the program confirms that the information was successfully captured.
+
+### Cellphone Number
+
+For the cellphone number, I interpreted the requirement as meaning that the subscriber number can have up to 10 digits after the international country code.
+
+For example, in:
+
+```text id="r9h3tc"
++27838968976
+```
+
+`+27` is the international country code and `838968976` is the subscriber number.
+
+This is why the regular expression allows a 2 or 3 digit country code followed by up to 10 digits.
 
 ## Summary
 
-The application demonstrates the use of Java classes, objects, constructors, encapsulation, methods, Boolean logic, loops, regular expressions and unit testing.
+Overall, this project uses Java to create a simple registration and login system.
 
-The `Main` class controls the overall application flow, while the `Login` class contains the registration, validation and login functionality.
+The `Main` class controls what happens in the program, such as asking the user for information and controlling the registration and login loops.
+
+The `Login` class contains the main validation and login methods. The project also uses concepts such as classes, objects, constructors, getters and setters, Boolean values, loops, regular expressions and JUnit testing.
