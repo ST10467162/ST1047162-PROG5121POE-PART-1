@@ -11,7 +11,7 @@ The application runs through the console and does not use a GUI or `JOptionPane`
 | --------------------- | -------------------------------------------------------------------------------------- |
 | `src/Login.java`      | Contains the login class and handles the validation, registration and login functions. |
 | `src/Main.java`       | Runs the program and allows the user to enter their registration and login details.    |
-| `test/LoginTest.java` | Contains the JUnit 4 tests used to test the different functions in the Login class.    |
+
 
 ## Login Class Methods
 
